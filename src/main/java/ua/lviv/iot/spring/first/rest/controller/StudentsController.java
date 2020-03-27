@@ -5,10 +5,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ua.lviv.iot.spring.first.business.StudentService;
 import ua.lviv.iot.spring.first.rest.model.Student;
 
 // @Controller is an annotation that marks a class as a request and exception handler.
@@ -17,18 +20,23 @@ import ua.lviv.iot.spring.first.rest.model.Student;
 @RestController
 public class StudentsController {
 
-  // HashMap is a map based collection class that stores the data in key+value pairs. it stores
+  // HashMap is a map based collection class which stores the data in key+value pairs. it stores
   // the data in RAM, therefore you can't get a student you created in a previous session.
 
   private Map<Integer, Student> students = new HashMap<>();
 
-  // AtomicInteger is used when you can get two or more requests at the same time and you want to
+  // AtomicInteger is used when you can get two or more requests at the same time, and you want to
   // avoid two objects getting the same data (e.g. id). we want to use it instead of ++ because
-  // ++ first returns counter's value and then increments it. if two requests are processed at the
+  // ++ first returns a counter's value and then increments it. if two requests are processed at the
   // same time, it may cause the situation when you lose 1 of 2 objects, and an id point which that
   // object was supposed to take.
 
   private AtomicInteger idCounter = new AtomicInteger();
+
+  // @Autowired says Spring Boot to create a corresponding studentRepository to this service
+
+  @Autowired
+  private StudentService studentService;
 
   // JSON - JS Object Notation. a human-readable text which consists of object's data in a form of
   // attribute-value pair, e.g.: {"firstName":"pedro","lastName":"aldomovar"}
@@ -47,7 +55,7 @@ public class StudentsController {
     return new LinkedList<Student>(students.values());
   }
 
-  // @PostMapping -  requests the server to store the message body. usually modeled as an insert
+  // @PostMapping - requests the server to store the message body. usually modeled as an insert
   // or update. at this point we UPDATE an object, even though the method is called createStudent
   // @RequestBody - whatever you can get from the request, put it in a request body and transfer it
   // into object, e.g. Student student. it basically DESERIALIZES JSON string into Java object
@@ -56,6 +64,8 @@ public class StudentsController {
 
   @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE, "application/x-yaml"})
   public Student createStudent(final @RequestBody Student student) {
+    System.out.println(studentService.createStudent(student));
+
     student.setId(idCounter.incrementAndGet());
     students.put(student.getId(), student);
     return student;
