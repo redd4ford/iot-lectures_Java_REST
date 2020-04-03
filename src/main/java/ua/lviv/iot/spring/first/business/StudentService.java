@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import ua.lviv.iot.spring.first.dataaccess.StudentRepository;
 import ua.lviv.iot.spring.first.rest.model.Student;
 
+import java.util.List;
+
 @Service
 public class StudentService {
   @Autowired
@@ -16,4 +18,13 @@ public class StudentService {
     return studentRepository.save(student);
   }
 
+  public Student updateStudent(Student student, String id) {
+    String query = "select * from students where id = :id";
+    String finalQuery = query + id;
+    return null;
+  }
+
+  public List<Student> findAll() {
+    return studentRepository.findAll();
+  }
 }
