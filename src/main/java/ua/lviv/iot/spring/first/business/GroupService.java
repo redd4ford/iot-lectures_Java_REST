@@ -15,6 +15,6 @@ public class GroupService {
   private GroupRepository groupRepository;
 
   public List<Group> getGroups() {
-      return groupRepository.findAll();
+    return groupRepository.findAll();
   }
 }

@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ua.lviv.iot.spring.first.business.GroupService;
-import ua.lviv.iot.spring.first.rest.model.Group;
+import ua.lviv.iot.spring.first.business.SubjectService;
+import ua.lviv.iot.spring.first.rest.model.Subject;
 import java.util.List;
 
 // @RestController is an annotation that marks a class as a request and exception handler. it can be
@@ -16,15 +16,15 @@ import java.util.List;
 // additional parameters to it, such as an HTTP-method, or specify a query body type:
 // e.g. consumes = "application/json" says Content-Type of the request must be "application / json".
 
-@RequestMapping("/groups")
+@RequestMapping("/subjects")
 @RestController
-public class GroupController {
+public class SubjectController {
 
   // @AUTOWIRED says Spring Boot to find a corresponding bean for this variable so we can treat it
   // as a Spring Boot object.
 
   @Autowired
-  private GroupService groupService;
+  private SubjectService subjectService;
 
   // JSON - JS Object Notation. a human-readable text which consists of object's data in a form of
   // attribute-value pair, e.g.: {"firstName":"pedro","lastName":"aldomovar"}
@@ -33,8 +33,8 @@ public class GroupController {
   // @PATHVARIABLE is an annotation used to pass parameters through a query address.
 
   @GetMapping
-  public List<Group> getGroups() {
-    return groupService.getGroups();
+  public List<Subject> getSubjects() {
+    return subjectService.getSubjects();
   }
 
-}
+}   

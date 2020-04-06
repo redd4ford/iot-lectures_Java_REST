@@ -51,13 +51,21 @@ public class StudentsController {
   // @PATHVARIABLE is an annotation used to pass parameters through a query address.
 
   @GetMapping(path = "/{id}")
-  public ResponseEntity<Student> getStudentById(@PathVariable("id") Integer studentId) {
+  public ResponseEntity<Student> getStudentById(final @PathVariable("id") Integer studentId) {
     return studentService.getStudentById(studentId);
   }
 
+  // @REQUESTPARAM looks if it can get a ?firstName={someName} from the URL and if yes, then search
+  // for a student with firstName = someName. if there is no such parameter, then return all
+  // students.
+
   @GetMapping
-  public List<Student> getStudents() {
-    return studentService.getStudents();
+  public List<Student> getStudents(final @RequestParam(value = "firstName", required = false) String firstName) {
+    if (firstName == null) {
+      return studentService.getStudents();
+    } else {
+      return studentService.getAllByFirstName(firstName);
+    }
   }
 
   // @POSTMAPPING - requests the server to store the message body. usually modeled as an insert.

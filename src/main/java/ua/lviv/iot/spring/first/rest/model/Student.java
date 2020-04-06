@@ -1,12 +1,15 @@
 package ua.lviv.iot.spring.first.rest.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
+import java.util.Set;
 
-// @Entity shows that the class can be mapped to a corresponding table
+// @ENTITY shows that the class can be mapped to a corresponding table
+// @NAMEDNATIVEQUERY says that we'll use native SQL syntax to write a query. we write queries
+// if Repository has no built-in method for your needs.
 
 @Entity
+@NamedNativeQuery(name = "Student.findBestStudent", query = "select * from student where id = 1")
 public class Student {
 
   // these annotations tell Spring boot to increment an id field in the database every time we
@@ -38,6 +41,12 @@ public class Student {
   @JoinColumn(name="group_id")
   @JsonIgnoreProperties("students")
   private Group group;
+
+  // we're not making a jointable here because we already did it in Subject class
+
+  @ManyToMany(mappedBy = "students")
+  @JsonIgnoreProperties("students")
+  private Set<Subject> subjects;
 
   public Student() {
   }
@@ -77,5 +86,13 @@ public class Student {
 
   public void setGroup(Group group) {
     this.group = group;
+  }
+
+  public Set<Subject> getSubjects() {
+    return subjects;
+  }
+
+  public void setSubjects(Set<Subject> subjects) {
+    this.subjects = subjects;
   }
 }
