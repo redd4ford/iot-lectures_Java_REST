@@ -6,16 +6,16 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.2.5.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>ua.lviv.iot.spring.first</groupId>
 	<artifactId>rest</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.6-SNAPSHOT</version>
 	<name>rest</name>
-	<description>Demo project for Spring Boot</description>
+	<description>My project to get to know Spring Boot and REST API</description>
 
 	<properties>
-		<java.version>8</java.version>
+		<java.version>13</java.version>
 	</properties>
 
 	<dependencies>
@@ -39,12 +39,13 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 		</dependency>
-		<!-- an old dependency for hypersonic database, an embedded database we used before mysql-->
+		<!-- an old dependency for the hypersonic database, an embedded database we used before mysql-->
 		<!-- dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
 			<scope>runtime</scope>
 		</dependency -->
+		<!-- an old dependency for mysql, a database I don't use because of technical issues-->
 		<!-- dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
